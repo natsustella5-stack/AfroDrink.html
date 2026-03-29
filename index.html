@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AfriDrinks – Votre boutique de boissons africaines en ligne</title>
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #faf7f2;
+      --bg2: #f0ebe0;
+      --surface: #ffffff;
+      --text: #1a1108;
+      --text-muted: #6b5e4e;
+      --primary: #c4521a;
+      --primary-dark: #9c3e10;
+      --primary-light: #f4e3d7;
+      --accent: #e8a833;
+      --accent2: #2d6a4f;
+      --border: #e2d9cc;
+      --shadow: 0 4px 24px rgba(50,30,10,.10);
+      --navbar-bg: #1a1108;
+      --footer-bg: #1a1108;
+      --radius: 14px;
+      --transition: .25s cubic-bezier(.4,0,.2,1);
+    }
+    [data-theme="dark"] {
+      --bg: #141010;
+      --bg2: #1e1812;
+      --surface: #231d16;
+      --text: #f5efe8;
+      --text-muted: #a8957f;
+      --primary: #e06a30;
+      --primary-dark: #c4521a;
+      --primary-light: #3a2010;
+      --accent: #f0b84a;
+      --accent2: #52b788;
+      --border: #3a2e22;
+      --shadow: 0 4px 24px rgba(0,0,0,.4);
+      --navbar-bg: #0e0b07;
+      --footer-bg: #0e0b07;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
+    }
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+    a { text-decoration: none; color: inherit; transition: color var(--transition); }
+    img { max-width: 100%; display: block; }
+    section { background: var(--bg); }
+
+    #top-bar {
+      background: var(--primary);
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .03em;
+      padding: 7px 0;
+      text-align: center;
+    }
+    #top-bar span { margin: 0 18px; }
+    #top-bar .close-bar {
+      position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+      cursor: pointer; opacity: .7;
+    }
+    #top-bar .close-bar:hover { opacity: 1; }
+
+    .main-navbar {
+      background: var(--navbar-bg) !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,.3);
+      padding: 0 !important;
+      position: sticky; top: 0; z-index: 1030;
+    }
+    .navbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 0;
+    }
+    .brand-logo-circle {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: #fff; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .brand-text { line-height: 1.1; }
+    .brand-text .brand-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #fff; font-weight: 800; }
+    .brand-text .brand-sub { font-size: .7rem; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; }
+    .main-navbar .nav-link {
+      color: rgba(255,255,255,.82) !important;
+      font-size: .9rem; font-weight: 500;
+      padding: 22px 14px !important;
+      position: relative;
+      transition: color var(--transition);
+    }
+    .main-navbar .nav-link::after {
+      content: ''; position: absolute; bottom: 0; left: 14px; right: 14px;
+      height: 2px; background: var(--accent);
+      transform: scaleX(0); transition: transform var(--transition);
+    }
+    .main-navbar .nav-link:hover, .main-navbar .nav-link.active {
+      color: #fff !important;
+    }
+    .main-navbar .nav-link:hover::after, .main-navbar .nav-link.active::after { transform: scaleX(1); }
+    .navbar-icons { display: flex; align-items: center; gap: 6px; }
+    .navbar-icons .icon-btn {
+      background: none; border: none; color: rgba(255,255,255,.82);
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; cursor: pointer; font-size: 1.1rem;
+      transition: background var(--transition), color var(--transition);
+      position: relative;
+    }
+    .navbar-icons .icon-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .cart-badge {
+      position: absolute; top: 2px; right: 2px;
+      background: var(--accent); color: #1a1108;
+      width: 18px; height: 18px; border-radius: 50%;
+      font-size: .62rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .navbar-toggler { border: none !important; }
+    .navbar-toggler:focus { box-shadow: none !important; }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    .nav-search-wrap { position: relative; }
+    .nav-search-wrap input {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 40px;
+      color: #fff; padding: 6px 36px 6px 16px;
+      font-size: .85rem; width: 200px;
+      outline: none; transition: background var(--transition);
+    }
+    .nav-search-wrap input::placeholder { color: rgba(255,255,255,.5); }
+    .nav-search-wrap input:focus { background: rgba(255,255,255,.18); }
+    .nav-search-wrap .search-ico {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      color: rgba(255,255,255,.6); font-size: .9rem;
+    }
+
+    #heroCarousel { background: #0e0b07; }
+    .hero-slide {
+      min-height: 80vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-slide::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(100deg, rgba(10,6,2,.85) 40%, rgba(10,6,2,.2));
+      z-index: 1;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; object-fit: cover;
+      width: 100%; height: 100%;
+      transform: scale(1.06);
+      transition: transform 8s ease;
+      z-index: 0;
+    }
+    .carousel-item.active .hero-bg { transform: scale(1); }
+    .hero-content { position: relative; z-index: 2; padding: 60px 0; }
+    .hero-tag {
+      display: inline-block; background: var(--primary);
+      color: #fff; border-radius: 40px;
+      padding: 4px 16px; font-size: .78rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 18px;
+      animation: fadeUp .8s .2s both;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      color: #fff; line-height: 1.08; margin-bottom: 18px;
+      animation: fadeUp .8s .35s both;
+    }
+    .hero-sub {
+      color: rgba(255,255,255,.72); font-size: 1.05rem;
+      max-width: 480px; margin-bottom: 36px;
+      animation: fadeUp .8s .5s both;
+    }
+    .hero-btns { animation: fadeUp .8s .65s both; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary-custom {
+      background: var(--primary); color: #fff; border: none;
+      padding: 13px 32px; border-radius: 40px; font-weight: 600;
+      font-size: .95rem; cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary-custom:hover { background: var(--primary-dark); transform: translateY(-2px); color: #fff; }
+    .btn-outline-light-custom {
+      border: 2px solid rgba(255,255,255,.5); color: #fff;
+      padding: 11px 28px; border-radius: 40px; font-weight: 600;
+      font-size: .95rem; background: transparent; cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .btn-outline-light-custom:hover { border-color: #fff; background: rgba(255,255,255,.1); color: #fff; }
+    .carousel-indicators [data-bs-target] {
+      width: 8px; height: 8px; border-radius: 50%;
+      border: none; background: rgba(255,255,255,.4);
+    }
+    .carousel-indicators [data-bs-target].active { background: var(--accent); width: 24px; border-radius: 4px; }
+    .carousel-control-prev, .carousel-control-next {
+      width: 48px; height: 48px;
+      top: 50%; transform: translateY(-50%); bottom: auto;
+      border-radius: 50%; background: rgba(255,255,255,.15);
+      backdrop-filter: blur(4px);
+      margin: 0 16px; opacity: 1;
+    }
+    .carousel-control-prev:hover, .carousel-control-next:hover { background: rgba(255,255,255,.28); }
+
+    .cat-strip { background: var(--surface); padding: 28px 0; border-bottom: 1px solid var(--border); }
+    .cat-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      cursor: pointer; transition: transform var(--transition);
+      text-align: center;
+    }
+    .cat-item:hover { transform: translateY(-4px); }
+    .cat-icon-wrap {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; transition: background var(--transition);
+    }
+    .cat-item:hover .cat-icon-wrap { background: var(--primary); color: #fff; }
+    .cat-label { font-size: .8rem; font-weight: 600; color: var(--text-muted); }
+    .cat-item:hover .cat-label { color: var(--primary); }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      margin-bottom: 6px; color: var(--text);
+    }
+    .section-sub { color: var(--text-muted); font-size: .95rem; margin-bottom: 36px; }
+    .section-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+    .see-all {
+      color: var(--primary); font-weight: 600; font-size: .88rem;
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: gap var(--transition);
+    }
+    .see-all:hover { gap: 8px; }
+
+    .product-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+      height: 100%;
+      display: flex; flex-direction: column;
+    }
+    .product-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+    .product-img-wrap {
+      position: relative; background: var(--bg2);
+      aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center;
+      padding: 24px; overflow: hidden;
+    }
+    .product-img-wrap img {
+      height: 180px; width: auto; object-fit: contain;
+      transition: transform var(--transition);
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.06); }
+    .product-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--primary); color: #fff;
+      border-radius: 6px; padding: 2px 10px; font-size: .72rem; font-weight: 700;
+    }
+    .product-badge.new { background: var(--accent2); }
+    .product-badge.promo { background: var(--primary); }
+    .product-badge.black { background: #000; color: #fff; border: 1px solid #fff; }
+    .product-wish {
+      position: absolute; top: 10px; right: 10px;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem;
+      transition: background var(--transition), color var(--transition);
+      color: var(--text-muted);
+    }
+    .product-wish:hover, .product-wish.active { background: #fee; color: #e53; }
+    .product-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+    .product-brand { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--primary); font-weight: 600; }
+    .product-name { font-family: 'Playfair Display', serif; font-size: 1rem; margin: 4px 0 10px; line-height: 1.3; }
+    .product-rating { color: var(--accent); font-size: .8rem; margin-bottom: 10px; }
+    .product-rating span { color: var(--text-muted); margin-left: 4px; }
+    .product-price-row { margin-top: auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .price-old { color: var(--text-muted); text-decoration: line-through; font-size: .85rem; }
+    .price-new { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+    .add-cart-btn {
+      background: var(--primary); color: #fff;
+      border: none; border-radius: 8px;
+      padding: 8px 16px; font-size: .85rem; font-weight: 600;
+      cursor: pointer; transition: background var(--transition);
+      display: flex; align-items: center; gap: 6px;
+      white-space: nowrap;
+    }
+    .add-cart-btn:hover { background: var(--primary-dark); }
+
+    .promo-banner {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--accent) 100%);
+      border-radius: var(--radius); padding: 48px 40px;
+      position: relative; overflow: hidden;
+    }
+    .promo-banner::before {
+      content: ''; position: absolute;
+      right: -60px; top: -60px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+    .promo-banner::after {
+      content: ''; position: absolute;
+      right: 80px; bottom: -80px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: rgba(255,255,255,.04);
+    }
+    .promo-label { color: var(--accent); font-size: .8rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    .promo-title { font-size: clamp(1.8rem, 4vw, 2.8rem); color: #fff; margin: 8px 0 12px; }
+    .promo-desc { color: rgba(255,255,255,.75); max-width: 380px; font-size: .95rem; margin-bottom: 24px; }
+    .promo-code-box {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,.12); border-radius: 8px;
+      padding: 10px 18px; margin-bottom: 24px;
+    }
+    .promo-code { color: #fff; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; }
+    .promo-copy {
+      background: #fff; color: var(--primary);
+      border: none; border-radius: 6px; padding: 4px 12px;
+      font-size: .8rem; font-weight: 700; cursor: pointer;
+      transition: opacity var(--transition);
+    }
+    .promo-copy:hover { opacity: .85; }
+    .promo-img { max-height: 280px; position: relative; z-index: 1; margin: 0 auto; }
+
+    .bf-banner {
+      background: #000;
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 40px;
+      border: 2px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+    .bf-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+    .bf-sub { color: #ccc; margin-bottom: 15px; }
+    
+    .blog-card {
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border); overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .blog-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+    .blog-img { aspect-ratio: 16/9; overflow: hidden; }
+    .blog-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .blog-card:hover .blog-img img { transform: scale(1.06); }
+    .blog-body { padding: 20px; }
+    .blog-tag { font-size: .72rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+    .blog-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin: 6px 0 10px; line-height: 1.35; }
+    .blog-meta { font-size: .78rem; color: var(--text-muted); }
+
+    .why-card {
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border); padding: 28px 24px;
+      text-align: center; height: 100%;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .why-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+    .why-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--primary-light); color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin: 0 auto 16px;
+    }
+    .why-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 8px; }
+    .why-desc { font-size: .88rem; color: var(--text-muted); line-height: 1.6; }
+
+    .newsletter-section {
+      background: var(--bg2); border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); padding: 60px 0;
+    }
+    .newsletter-form { display: flex; gap: 10px; max-width: 460px; margin: 0 auto; }
+    .newsletter-form input {
+      flex: 1; border: 1px solid var(--border); border-radius: 40px;
+      background: var(--surface); color: var(--text);
+      padding: 12px 22px; font-size: .9rem; outline: none;
+      transition: border-color var(--transition);
+    }
+    .newsletter-form input:focus { border-color: var(--primary); }
+
+    .testi-card {
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border); padding: 28px;
+    }
+    .testi-stars { color: var(--accent); font-size: .9rem; margin-bottom: 12px; }
+    .testi-text { font-size: .9rem; line-height: 1.65; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .testi-name { font-weight: 600; font-size: .9rem; }
+    .testi-loc { font-size: .78rem; color: var(--text-muted); }
+
+    .offcanvas { background: var(--surface) !important; color: var(--text) !important; }
+    .offcanvas-header { border-bottom: 1px solid var(--border) !important; }
+    .cart-item { display: flex; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .cart-item-img { width: 60px; height: 60px; background: var(--bg2); border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
+    .cart-item-name { font-weight: 600; font-size: .9rem; }
+    .cart-item-price { color: var(--primary); font-weight: 700; }
+    .cart-item-qty { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+    .qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); background: none; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: .85rem; }
+    .qty-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+    
+    .cart-summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: .9rem; color: var(--text-muted); }
+    .cart-summary-total { font-weight: 700; color: var(--text); font-size: 1.2rem; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .delivery-info { background: var(--bg2); padding: 10px; border-radius: 8px; font-size: .8rem; color: var(--text-muted); margin-top: 10px; display: flex; align-items: center; gap: 8px; }
+
+    #contact { display: none; }
+    #contact.active { display: block; }
+    .form-control-custom {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); padding: 12px 16px;
+      font-size: .92rem; width: 100%; outline: none;
+      transition: border-color var(--transition);
+    }
+    .form-control-custom:focus { border-color: var(--primary); }
+    .form-control-custom::placeholder { color: var(--text-muted); }
+    .form-error { color: #e53; font-size: .78rem; margin-top: 4px; display: none; }
+
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+    .about-hero {
+      background: linear-gradient(135deg, #1a1108 0%, #3a1e05 100%);
+      padding: 80px 0; margin-bottom: 0;
+    }
+    .about-hero h1 { color: #fff; }
+    .about-hero p { color: rgba(255,255,255,.7); }
+    .about-stat { text-align: center; }
+    .about-stat .stat-num { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: var(--primary); font-weight: 800; }
+    .about-stat .stat-label { font-size: .85rem; color: var(--text-muted); }
+
+    footer {
+      background: var(--footer-bg); color: rgba(255,255,255,.72);
+      padding: 60px 0 0;
+    }
+    .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #fff; font-weight: 800; }
+    .footer-desc { font-size: .88rem; line-height: 1.7; margin: 14px 0 22px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,.08); color: rgba(255,255,255,.7);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem; transition: background var(--transition), color var(--transition);
+      cursor: pointer;
+    }
+    .social-btn:hover { background: var(--primary); color: #fff; }
+    .footer-heading { color: #fff; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 16px; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { color: rgba(255,255,255,.6); font-size: .88rem; transition: color var(--transition); }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: .88rem; }
+    .footer-contact-item i { color: var(--accent); margin-top: 2px; flex-shrink: 0; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 18px 0; margin-top: 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px; font-size: .8rem;
+    }
+    .footer-bottom a { color: rgba(255,255,255,.5); }
+    .footer-bottom a:hover { color: var(--accent); }
+    .payment-icons { display: flex; gap: 8px; align-items: center; }
+    .pay-icon {
+      background: rgba(255,255,255,.1); border-radius: 4px;
+      padding: 4px 8px; font-size: .7rem; color: #fff; font-weight: 700;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+    .toast-msg {
+      background: var(--text); color: var(--bg);
+      padding: 12px 22px; border-radius: 10px; font-size: .88rem; font-weight: 500;
+      box-shadow: var(--shadow); animation: fadeUp .35s both;
+      max-width: 280px;
+    }
+    .toast-msg.success { background: var(--accent2); color: #fff; }
+    .toast-msg.error { background: #c92a2a; color: #fff; }
+
+    @media (max-width: 991px) {
+      .hero-slide { min-height: 60vh; }
+      .main-navbar .nav-link::after { display: none; }
+      .main-navbar .nav-link { padding: 12px 16px !important; }
+      .nav-search-wrap input { width: 140px; }
+      .newsletter-form { flex-direction: column; }
+    }
+    @media (max-width: 767px) {
+      .hero-slide { min-height: 50vh; }
+      .promo-banner { padding: 32px 22px; }
+      .nav-search-wrap { display: none; }
+    }
+
+    #scrollTop {
+      position: fixed; bottom: 24px; left: 24px; z-index: 900;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--primary); color: #fff;
+      border: none; font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(196,82,26,.4);
+      opacity: 0; transform: scale(0); transition: opacity var(--transition), transform var(--transition);
+    }
+    #scrollTop.show { opacity: 1; transform: scale(1); }
+
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #1a1108;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 18px;
+      transition: opacity .5s;
+    }
+    #loader.hide { opacity: 0; pointer-events: none; }
+    .loader-logo { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #fff; font-weight: 800; }
+    .loader-logo span { color: var(--accent); }
+    .loader-bar { width: 160px; height: 3px; background: rgba(255,255,255,.15); border-radius: 3px; overflow: hidden; }
+    .loader-bar-inner { height: 100%; width: 0; background: var(--primary); animation: loadBar 1.2s ease forwards; }
+    @keyframes loadBar { to { width: 100%; } }
+
+    .dark-toggle { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-logo">Afri<span>Drinks</span></div>
+  <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+</div>
+
+<div id="top-bar" class="position-relative">
+  <span>🚚 Livraison gratuite à partir de 25 000 XAF</span>
+  <span class="d-none d-md-inline">🌍 Plus de 20 boissons africaines authentiques</span>
+  <span class="d-none d-lg-inline">⭐ Contactez-nous : 06 48 95 70</span>
+  <span class="close-bar" onclick="document.getElementById('top-bar').style.display='none'"><i class="bi bi-x"></i></span>
+</div>
+
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="#" onclick="showSection('home')">
+      <div class="brand-logo-circle">A</div>
+      <div class="brand-text">
+        <div class="brand-name">AfriDrinks</div>
+        <div class="brand-sub">Boissons Africaines</div>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav mx-auto gap-0">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('home')">Accueil</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Catégories</a>
+          <ul class="dropdown-menu" style="background:var(--surface);border:1px solid var(--border);">
+            <li><a class="dropdown-item" href="#" onclick="filterCat('biere')" style="color:var(--text)">🍺 Bières Africaines</a></li>
+            <li><a class="dropdown-item" href="#" onclick="filterCat('vin')" style="color:var(--text)">🍷 Vins & Palmiers</a></li>
+            <li><a class="dropdown-item" href="#" onclick="filterCat('jus')" style="color:var(--text)">🥭 Jus Naturels</a></li>
+            <li><a class="dropdown-item" href="#" onclick="filterCat('spirit')" style="color:var(--text)">🥃 Spiritueux</a></li>
+            <li><a class="dropdown-item" href="#" onclick="filterCat('soft')" style="color:var(--text)">🧃 Boissons Douces</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="filterCat('all')" style="color:var(--text)">Tout voir</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('shop')">Boutique</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('blog')">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('about')">À Propos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('contact')">Contact</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+        <div class="nav-search-wrap">
+          <input type="text" id="searchInput" placeholder="Rechercher..." oninput="liveSearch(this.value)" />
+          <i class="bi bi-search search-ico"></i>
+        </div>
+        <div class="navbar-icons">
+          <button class="icon-btn dark-toggle" onclick="toggleDark()" title="Mode sombre">
+            <i class="bi bi-moon-fill" id="darkIcon"></i>
+          </button>
+          <button class="icon-btn" onclick="showSection('wishlist')" title="Favoris">
+            <i class="bi bi-heart"></i>
+            <span class="cart-badge" id="wishBadge">0</span>
+          </button>
+          <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" title="Panier">
+            <i class="bi bi-bag"></i>
+            <span class="cart-badge" id="cartBadge">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" style="font-family:'Playfair Display',serif">Mon Panier</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+    <div id="cartItems" style="flex:1; overflow-y:auto;"></div>
+    <div id="cartEmpty" class="text-center py-5" style="color:var(--text-muted)">
+      <i class="bi bi-bag" style="font-size:3rem;opacity:.3"></i>
+      <p class="mt-3">Votre panier est vide</p>
+    </div>
+    
+    <div id="cartFooter" style="display:none; border-top: 1px solid var(--border); padding-top: 16px;">
+      <!-- Calculs livraison -->
+      <div class="cart-summary-row"><span>Sous-total</span><span id="cartSubtotal">0 XAF</span></div>
+      <div class="cart-summary-row"><span>Livraison</span><span id="cartDelivery">1500 XAF</span></div>
+      <div class="delivery-info" id="deliveryMsg">
+        <i class="bi bi-truck"></i> Livraison standard (1500 XAF)
+      </div>
+      <div class="cart-summary-total cart-summary-row">
+        <span>Total</span><span id="cartTotal">0 XAF</span>
+      </div>
+
+      <button class="btn-primary-custom w-100 mt-3 justify-content-center" onclick="checkout()">
+        <i class="bi bi-credit-card"></i> Valider la commande
+      </button>
+      <button class="btn-outline-light-custom w-100 mt-2" style="color:var(--text);border-color:var(--border)" onclick="clearCart()">
+        Vider le panier
+      </button>
+    </div>
+  </div>
+</div>
+
+<main id="home" class="page-section active">
+
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+    </div>
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+        <div class="hero-slide">
+          <img src="afrique.png" class="hero-bg" alt="Slide 1" onerror="this.style.display='none'">
+          <div class="container">
+            <div class="hero-content">
+              <span class="hero-tag">✦ Nouveauté 2025</span>
+              <h1 class="hero-title">L'Afrique dans<br>chaque gorgée</h1>
+              <p class="hero-sub">Découvrez notre sélection premium de boissons africaines authentiques, directement importées du continent.</p>
+              <div class="hero-btns">
+                <button class="btn-primary-custom" onclick="showSection('shop')"><i class="bi bi-shop"></i> Découvrir la boutique</button>
+                <button class="btn-outline-light-custom" onclick="showSection('about')">Notre histoire</button>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;right:8%;bottom:0;z-index:2;font-size:12rem;opacity:.12;line-height:1">🌍</div>
+        </div>
+      </div>
+      
+      <div class="carousel-item">
+        <div class="hero-slide">
+          <img src="regab.png" class="hero-bg" alt="Slide 2" onerror="this.style.display='none'">
+          <div class="container">
+            <div class="hero-content">
+              <span class="hero-tag">⭐ Best-seller</span>
+              <h1 class="hero-title">Bières africaines<br>d'exception</h1>
+              <p class="hero-sub">Plus de 50 références de bières brassées en Afrique. Star Beer, Primus, Flag, Castel et bien plus encore.</p>
+              <div class="hero-btns">
+                <button class="btn-primary-custom" onclick="filterCat('biere');showSection('shop')"><i class="bi bi-arrow-right"></i> Voir les bières</button>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;right:8%;bottom:0;z-index:2;font-size:12rem;opacity:.12;line-height:1">🍺</div>
+        </div>
+      </div>
+      
+      <div class="carousel-item">
+        <div class="hero-slide">
+          <img src="fruit.png" class="hero-bg" alt="Slide 3" onerror="this.style.display='none'">
+          <div class="container">
+            <div class="hero-content">
+              <span class="hero-tag">🥭 Saison Tropicale</span>
+              <h1 class="hero-title">Jus & Boissons<br>100% Naturels</h1>
+              <p class="hero-sub">Mangue, bissap, gingembre, baobab… Les saveurs authentiques de l'Afrique livrées chez vous.</p>
+              <div class="hero-btns">
+                <button class="btn-primary-custom" onclick="filterCat('jus');showSection('shop')"><i class="bi bi-arrow-right"></i> Voir les jus</button>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;right:8%;bottom:0;z-index:2;font-size:12rem;opacity:.12;line-height:1">🥭</div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <i class="bi bi-chevron-left" style="color:#fff;font-size:1.2rem"></i>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <i class="bi bi-chevron-right" style="color:#fff;font-size:1.2rem"></i>
+    </button>
+  </div>
+
+  
+  <div class="cat-strip">
+    <div class="container">
+      <div class="row row-cols-3 row-cols-sm-4 row-cols-md-6 g-3 justify-content-center">
+        <div class="col"><div class="cat-item" onclick="filterCat('all');showSection('shop')"><div class="cat-icon-wrap">🌍</div><div class="cat-label">Tout voir</div></div></div>
+        <div class="col"><div class="cat-item" onclick="filterCat('biere');showSection('shop')"><div class="cat-icon-wrap">🍺</div><div class="cat-label">Bières</div></div></div>
+        <div class="col"><div class="cat-item" onclick="filterCat('vin');showSection('shop')"><div class="cat-icon-wrap">🍷</div><div class="cat-label">Vins & Palmiers</div></div></div>
+        <div class="col"><div class="cat-item" onclick="filterCat('jus');showSection('shop')"><div class="cat-icon-wrap">🥭</div><div class="cat-label">Jus Naturels</div></div></div>
+        <div class="col"><div class="cat-item" onclick="filterCat('spirit');showSection('shop')"><div class="cat-icon-wrap">🥃</div><div class="cat-label">Spiritueux</div></div></div>
+        <div class="col"><div class="cat-item" onclick="filterCat('soft');showSection('shop')"><div class="cat-icon-wrap">🧃</div><div class="cat-label">Boissons Douces</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  
+  <section class="py-4">
+    <div class="container">
+      <div class="bf-banner fade-up">
+        <div class="bf-title">Black Friday</div>
+        <div class="bf-sub">-20% sur toute la boutique cette semaine !</div>
+        <img src="regab.png" alt="Regab Special" class="bf-logo-img">
+        <div style="margin-top:20px">
+            <button class="btn-primary-custom mt-2" onclick="showSection('shop')">Profiter des offres</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div>
+          <h2 class="section-title">Nos 20 Boissons</h2>
+          <p class="section-sub mb-0">La sélection complète de nos meilleures saveurs</p>
+        </div>
+        <a href="#" class="see-all" onclick="showSection('shop')">Tout voir <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="row g-3" id="featuredProducts"></div>
+    </div>
+  </section>
+
+  <section class="py-4">
+    <div class="container">
+      <div class="promo-banner fade-up">
+        <div class="row align-items-center">
+          <div class="col-lg-7">
+            <div class="promo-label">Offre Inscription</div>
+            <h2 class="promo-title">-10% sur votre<br>première commande</h2>
+            <p class="promo-desc">Inscrivez-vous à notre newsletter et profitez de votre réduction exclusive dès votre premier achat de boissons africaines.</p>
+            <div class="promo-code-box">
+              <span class="promo-code">AFRI10</span>
+              <button class="promo-copy" onclick="copyCode()">Copier</button>
+            </div>
+            <button class="btn-primary-custom" style="background:#fff;color:var(--primary-dark)" onclick="showSection('contact')">
+              <i class="bi bi-envelope"></i> S'inscrire à la newsletter
+            </button>
+          </div>
+          <div class="col-lg-5 text-center mt-4 mt-lg-0">
+            <div style="font-size:9rem;line-height:1;filter:drop-shadow(0 20px 40px rgba(0,0,0,.3))">🌴🍺🥭</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="py-5">
+    <div class="container">
+      <div class="text-center mb-5 fade-up">
+        <h2 class="section-title">Pourquoi choisir AfriDrinks ?</h2>
+        <p class="section-sub">Votre spécialiste en boissons africaines depuis 2019</p>
+      </div>
+      <div class="row g-3">
+        <div class="col-6 col-lg-3 fade-up"><div class="why-card"><div class="why-icon"><i class="bi bi-shield-check"></i></div><div class="why-title">Authenticité garantie</div><div class="why-desc">Tous nos produits sont directement importés et certifiés d'origine africaine.</div></div></div>
+        <div class="col-6 col-lg-3 fade-up"><div class="why-card"><div class="why-icon"><i class="bi bi-truck"></i></div><div class="why-title">Livraison rapide</div><div class="why-desc">Livraison en 24-48h dans toute la ville. Gratuite dès 25 000 XAF d'achat.</div></div></div>
+        <div class="col-6 col-lg-3 fade-up"><div class="why-card"><div class="why-icon"><i class="bi bi-star"></i></div><div class="why-title">Sélection premium</div><div class="why-desc">Plus de 20 boissons soigneusement sélectionnées de 15 pays africains.</div></div></div>
+        <div class="col-6 col-lg-3 fade-up"><div class="why-card"><div class="why-icon"><i class="bi bi-headset"></i></div><div class="why-title">Support 7j/7</div><div class="why-desc">Notre équipe est disponible 7j/7 pour répondre à toutes vos questions.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5" style="background:var(--bg2)">
+    <div class="container">
+      <div class="text-center mb-5 fade-up">
+        <h2 class="section-title">Ce que disent nos clients</h2>
+        <p class="section-sub">Plus de 1 000 clients satisfaits à travers l'Afrique</p>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-4 fade-up"><div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"AfriDrinks est LA référence pour les boissons africaines ! J'ai retrouvé le goût de mon pays avec leurs jus de bissap. Livraison rapide et emballage soigné."</div><div class="testi-author"><div class="testi-avatar">AM</div><div><div class="testi-name">Aminata Mbaye</div><div class="testi-loc">Libreville, Gabon</div></div></div></div></div>
+        <div class="col-md-4 fade-up"><div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Je commande régulièrement la Regab et la castel. Toujours fraîches, toujours parfaites. Le service client est vraiment au top, je recommande vivement !"</div><div class="testi-author"><div class="testi-avatar">KD</div><div><div class="testi-name">Kofi Darkwah</div><div class="testi-loc">Accra, Ghana</div></div></div></div></div>
+        <div class="col-md-4 fade-up"><div class="testi-card"><div class="testi-stars">★★★★☆</div><div class="testi-text">"Excellent choix de spiritueux africains que je ne trouvais nulle part ailleurs. Le whisky kenyans et les gins nigérians sont exceptionnels. Site très facile à utiliser."</div><div class="testi-author"><div class="testi-avatar">FN</div><div><div class="testi-name">Fatou Ndiaye</div><div class="testi-loc">Dakar, Sénégal</div></div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div>
+          <h2 class="section-title">Notre Blog</h2>
+          <p class="section-sub mb-0">Actualités, recettes et culture des boissons africaines</p>
+        </div>
+        <a href="#" class="see-all" onclick="showSection('blog')">Tous les articles <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-4 fade-up">
+          <div class="blog-card">
+            <div class="blog-img"><div style="background:linear-gradient(135deg,#c4521a,#e8a833);height:100%;min-height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem">🌴</div></div>
+            <div class="blog-body">
+              <div class="blog-tag">Culture</div>
+              <div class="blog-title">Histoire du vin de palme : une tradition africaine millénaire</div>
+              <div class="blog-meta"><i class="bi bi-calendar3"></i> 12 mars 2025 · <i class="bi bi-clock"></i> 5 min</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 fade-up">
+          <div class="blog-card">
+            <div class="blog-img"><div style="background:linear-gradient(135deg,#2d6a4f,#52b788);height:100%;min-height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem">🌿</div></div>
+            <div class="blog-body">
+              <div class="blog-tag">Recette</div>
+              <div class="blog-title">Cocktail Bissap Gingembre : la recette fraîcheur de l'été</div>
+              <div class="blog-meta"><i class="bi bi-calendar3"></i> 8 mars 2025 · <i class="bi bi-clock"></i> 3 min</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 fade-up">
+          <div class="blog-card">
+            <div class="blog-img"><div style="background:linear-gradient(135deg,#1a1108,#c4521a);height:100%;min-height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem">🍺</div></div>
+            <div class="blog-body">
+              <div class="blog-tag">Dégustation</div>
+              <div class="blog-title">Top 10 des meilleures bières africaines à absolument goûter</div>
+              <div class="blog-meta"><i class="bi bi-calendar3"></i> 1 mars 2025 · <i class="bi bi-clock"></i> 7 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="newsletter-section" id="scroll-to-newsletter">
+    <div class="container text-center">
+      <div class="fade-up">
+        <h2 class="section-title">Restez informé des nouveautés</h2>
+        <p class="section-sub">Inscrivez-vous et recevez votre code promo <strong>-10%</strong> en cadeau de bienvenue</p>
+        <div class="newsletter-form">
+          <input type="email" id="newsletterEmail" placeholder="Votre adresse email..." />
+          <button class="btn-primary-custom" onclick="subscribeNewsletter()"><i class="bi bi-send"></i> S'inscrire</button>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-muted);margin-top:12px">Pas de spam. Désabonnement à tout moment.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<main id="shop" class="page-section">
+  <div class="container py-5">
+    <div class="row mb-4 align-items-center">
+      <div class="col-md-6">
+        <h2 class="section-title">Boutique</h2>
+        <p style="color:var(--text-muted)">Découvrez toutes nos boissons africaines</p>
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex gap-2 justify-content-md-end flex-wrap">
+          <select class="form-select" id="sortSelect" onchange="sortProducts(this.value)" style="width:auto;background:var(--surface);color:var(--text);border-color:var(--border)">
+            <option value="default">Trier par défaut</option>
+            <option value="price-asc">Prix croissant</option>
+            <option value="price-desc">Prix décroissant</option>
+            <option value="name">Nom A-Z</option>
+          </select>
+          <div class="d-flex gap-1">
+            <button class="btn btn-sm" id="gridBtn" onclick="setView('grid')" style="background:var(--primary);color:#fff"><i class="bi bi-grid"></i></button>
+            <button class="btn btn-sm" id="listBtn" onclick="setView('list')" style="background:var(--surface);color:var(--text);border:1px solid var(--border)"><i class="bi bi-list"></i></button>
+          </div>
+        </div>
+      </div> 
+    
+    </div>
+    <div class="d-flex gap-2 mb-4 flex-wrap">
+      <button class="btn btn-sm filter-btn active" onclick="filterCat('all');setActiveFilter(this)" style="border-radius:40px">Tout</button>
+      <button class="btn btn-sm filter-btn" onclick="filterCat('biere');setActiveFilter(this)" style="border-radius:40px">🍺 Bières</button>
+      <button class="btn btn-sm filter-btn" onclick="filterCat('vin');setActiveFilter(this)" style="border-radius:40px">🍷 Vins & Palmiers</button>
+      <button class="btn btn-sm filter-btn" onclick="filterCat('jus');setActiveFilter(this)" style="border-radius:40px">🥭 Jus Naturels</button>
+      <button class="btn btn-sm filter-btn" onclick="filterCat('spirit');setActiveFilter(this)" style="border-radius:40px">🥃 Spiritueux</button>
+      <button class="btn btn-sm filter-btn" onclick="filterCat('soft');setActiveFilter(this)" style="border-radius:40px">🧃 Boissons Douces</button>
+    </div>
+    <div class="row g-3" id="shopProducts"></div>
+    <div id="noResults" style="display:none;text-align:center;padding:60px;color:var(--text-muted)">
+      <i class="bi bi-search" style="font-size:3rem;opacity:.3"></i>
+      <p class="mt-3">Aucun produit trouvé</p>
+    </div>
+  </div>
+</main>
+
+<main id="about" class="page-section">
+  <div class="about-hero">
+    <div class="container text-center">
+      <span class="hero-tag">Notre Histoire</span>
+      <h1 class="section-title mt-3" style="color:#fff;font-size:3rem">Passionnés par les<br>saveurs d'Afrique</h1>
+      <p style="color:rgba(255,255,255,.7);max-width:550px;margin:16px auto 0">Depuis 2021, AfriDrinks sélectionne et distribue les meilleures boissons africaines pour faire voyager vos papilles.</p>
+    </div>
+  </div>
+  <div class="container py-5">
+    <div class="row g-4 mb-5">
+      <div class="col-sm-3 fade-up"><div class="about-stat"><div class="stat-num">20+</div><div class="stat-label">Boissons Références</div></div></div>
+      <div class="col-sm-3 fade-up"><div class="about-stat"><div class="stat-num">15</div><div class="stat-label">Pays africains</div></div></div>
+      <div class="col-sm-3 fade-up"><div class="about-stat"><div class="stat-num">1 000+</div><div class="stat-label">Clients satisfaits</div></div></div>
+      <div class="col-sm-3 fade-up"><div class="about-stat"><div class="stat-num">5 ans</div><div class="stat-label">D'expérience</div></div></div>
+    </div>
+    <div class="row align-items-center g-5 mb-5">
+      <div class="col-lg-6 fade-up">
+        <h2 class="section-title">Notre mission</h2>
+        <p style="color:var(--text-muted);line-height:1.8;margin:16px 0">AfriDrinks est née d'une passion pour les saveurs authentiques d'Afrique. Nous croyons que chaque boisson raconte une histoire, celle d'un terroir, d'une tradition, d'un peuple.</p>
+        <p style="color:var(--text-muted);line-height:1.8;margin-bottom:24px">Notre mission est de rendre accessibles les meilleures boissons africaines, qu'il s'agisse de bières brassées selon des recettes séculaires, de vins de palme artisanaux, de jus de fruits tropicaux ou de spiritueux d'exception.</p>
+        <button class="btn-primary-custom" onclick="showSection('shop')"><i class="bi bi-shop"></i> Découvrir nos produits</button>
+      </div>
+      <div class="col-lg-6 fade-up">
+        <div style="background:var(--bg2);border-radius:var(--radius);padding:40px;text-align:center;border:1px solid var(--border)">
+          <div style="font-size:8rem;line-height:1.2">🌍🍺🌴🥭</div>
+          <p style="color:var(--text-muted);font-size:.9rem;margin-top:16px">Le meilleur de l'Afrique, livré chez vous</p>
+        </div>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4 fade-up"><div class="why-card"><div class="why-icon">🌱</div><div class="why-title">Approvisionnement éthique</div><div class="why-desc">Nous travaillons directement avec des producteurs africains pour garantir l'authenticité et soutenir l'économie locale.</div></div></div>
+      <div class="col-md-4 fade-up"><div class="why-card"><div class="why-icon">🔬</div><div class="why-title">Contrôle qualité</div><div class="why-desc">Chaque produit passe par notre processus de sélection rigoureux avant d'être proposé sur notre boutique.</div></div></div>
+      <div class="col-md-4 fade-up"><div class="why-card"><div class="why-icon">🚀</div><div class="why-title">Innovation continue</div><div class="why-desc">Nous enrichissons constamment notre catalogue pour vous offrir les dernières découvertes du continent africain.</div></div></div>
+    </div>
+  </div>
+</main>
+
+<main id="blog" class="page-section">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Blog AfriDrinks</h2>
+      <p style="color:var(--text-muted)">Culture, recettes et découvertes autour des boissons africaines</p>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-4 fade-up"><div class="blog-card"><div class="blog-img"><div style="background:linear-gradient(135deg,#c4521a,#e8a833);height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem">🌴</div></div><div class="blog-body"><div class="blog-tag">Culture</div><div class="blog-title">Histoire du vin de palme : une tradition africaine millénaire</div><p style="font-size:.85rem;color:var(--text-muted);margin:8px 0">Le vin de palme, extrait de la sève du palmier, est consommé depuis des millénaires en Afrique centrale et occidentale. Découvrez cette tradition fascinante...</p><div class="blog-meta"><i class="bi bi-calendar3"></i> 12 mars 2025</div></div></div></div>
+      <div class="col-md-6 col-lg-4 fade-up"><div class="blog-card"><div class="blog-img"><div style="background:linear-gradient(135deg,#2d6a4f,#52b788);height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem">🌿</div></div><div class="blog-body"><div class="blog-tag">Recette</div><div class="blog-title">Cocktail Bissap Gingembre : la recette fraîcheur de l'été</div><p style="font-size:.85rem;color:var(--text-muted);margin:8px 0">Le bissap (jus d'hibiscus) mélangé au gingembre frais crée une boisson incroyablement rafraîchissante. Voici notre recette secrète en 5 étapes...</p><div class="blog-meta"><i class="bi bi-calendar3"></i> 8 mars 2025</div></div></div></div>
+      <div class="col-md-6 col-lg-4 fade-up"><div class="blog-card"><div class="blog-img"><div style="background:linear-gradient(135deg,#1a1108,#c4521a);height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem">🍺</div></div><div class="blog-body"><div class="blog-tag">Dégustation</div><div class="blog-title">Top 10 des meilleures bières africaines à absolument goûter</div><p style="font-size:.85rem;color:var(--text-muted);margin:8px 0">De la Star Beer nigériane à la Castel gabonaise, en passant par la Primus congolaise... Notre sélection des 10 bières africaines incontournables...</p><div class="blog-meta"><i class="bi bi-calendar3"></i> 1 mars 2025</div></div></div></div>
+      <div class="col-md-6 col-lg-4 fade-up"><div class="blog-card"><div class="blog-img"><div style="background:linear-gradient(135deg,#b5179e,#7209b7);height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem">🍷</div></div><div class="blog-body"><div class="blog-tag">Vin</div><div class="blog-title">Le vin africain : une industrie en plein essor sur le continent</div><p style="font-size:.85rem;color:var(--text-muted);margin:8px 0">L'Afrique du Sud, le Maroc, la Tunisie... La viticulture africaine produit des vins de plus en plus reconnus sur la scène internationale...</p><div class="blog-meta"><i class="bi bi-calendar3"></i> 22 fév 2025</div></div></div></div>
+      <div class="col-md-6 col-lg-4 fade-up"><div class="blog-card"><div class="blog-img"><div style="background:linear-gradient(135deg,#e36414,#fb8b24);height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem">🥤</div></div><div class="blog-body"><div class="blog-tag">Santé</div><div class="blog-title">Les bienfaits du jus de baobab : le super-fruit africain</div><p style="font-size:.85rem;color:var(--text-muted);margin:8px 0">Riche en vitamine C, calcium et antioxydants, le jus de baobab est le trésor nutritionnel de l'Afrique. Tout ce que vous devez savoir...</p><div class="blog-meta"><i class="bi bi-calendar3"></i> 15 fév 2025</div></div></div></div>
+      <div class="col-md-6 col-lg-4 fade-up"><div class="blog-card"><div class="blog-img"><div style="background:linear-gradient(135deg,#023e8a,#0077b6);height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem">🥃</div></div><div class="blog-body"><div class="blog-tag">Spiritueux</div><div class="blog-title">Argi : le gin nigérian qui conquiert les bars du monde entier</div><p style="font-size:.85rem;color:var(--text-muted);margin:8px 0">Distillé avec des ingrédients locaux comme le poivre selim et le gingembre africain, Argi révolutionne le monde du gin premium...</p><div class="blog-meta"><i class="bi bi-calendar3"></i> 8 fév 2025</div></div></div></div>
+    </div>
+  </div>
+</main>
+
+<main id="contact" class="page-section">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="text-center mb-5">
+          <h2 class="section-title">Contactez-nous</h2>
+          <p style="color:var(--text-muted)">Notre équipe est disponible 7j/7 pour vous répondre</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="why-card mb-3">
+              <div class="why-icon"><i class="bi bi-geo-alt"></i></div>
+              <div class="why-title">Adresse</div>
+              <div class="why-desc">Okala<br>Libreville, Gabon</div>
+            </div>
+            <div class="why-card mb-3">
+              <div class="why-icon"><i class="bi bi-telephone"></i></div>
+              <div class="why-title">Téléphone</div>
+              <div class="why-desc">06 48 95 70<br>Disponible 7j/7</div>
+            </div>
+            <div class="why-card mb-3">
+              <div class="why-icon"><i class="bi bi-envelope"></i></div>
+              <div class="why-title">Email</div>
+              <div class="why-desc">natsustella5@gmail.com</div>
+            </div>
+            <div class="why-card">
+              <div class="why-icon" style="background:#E1306C; color:#fff"><i class="bi bi-instagram"></i></div>
+              <div class="why-title">Instagram</div>
+              <div class="why-desc">
+                <a href="https://www.instagram.com/janvier_1_0?igsh=MnloMnJmcG9sYWxl" target="_blank" style="color:var(--primary);text-decoration:underline">Suivez-nous @janvier_1_0</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div style="background:var(--surface);border-radius:var(--radius);padding:36px;border:1px solid var(--border)">
+              <h4 style="font-family:'Playfair Display',serif;margin-bottom:24px">Envoyez-nous un message</h4>
+              <form id="contactForm" onsubmit="submitContact(event)">
+                <div class="row g-3 mb-3">
+                  <div class="col-sm-6">
+                    <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block">Prénom *</label>
+                    <input type="text" id="fPrenom" class="form-control-custom" placeholder="Votre prénom" />
+                    <div class="form-error" id="errPrenom">Ce champ est obligatoire</div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block">Nom *</label>
+                    <input type="text" id="fNom" class="form-control-custom" placeholder="Votre nom" />
+                    <div class="form-error" id="errNom">Ce champ est obligatoire</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block">Email *</label>
+                  <input type="email" id="fEmail" class="form-control-custom" placeholder="votre@email.com" />
+                  <div class="form-error" id="errEmail">Email invalide</div>
+                </div>
+                <div class="mb-3">
+                  <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block">Sujet</label>
+                  <select id="fSujet" class="form-control-custom">
+                    <option>Commande / Livraison</option>
+                    <option>Question produit</option>
+                    <option>Partenariat</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+                <div class="mb-4">
+                  <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block">Message *</label>
+                  <textarea id="fMessage" class="form-control-custom" rows="5" placeholder="Votre message..."></textarea>
+                  <div class="form-error" id="errMessage">Ce champ est obligatoire</div>
+                </div>
+                <button type="submit" class="btn-primary-custom w-100 justify-content-center">
+                  <i class="bi bi-send"></i> Envoyer le message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main id="wishlist" class="page-section">
+  <div class="container py-5">
+    <h2 class="section-title mb-4">Mes Favoris</h2>
+    <div class="row g-3" id="wishlistProducts"></div>
+    <div id="wishlistEmpty" class="text-center py-5" style="color:var(--text-muted)">
+      <i class="bi bi-heart" style="font-size:3rem;opacity:.3"></i>
+      <p class="mt-3">Vous n'avez pas encore de favoris</p>
+      <button class="btn-primary-custom mt-3" onclick="showSection('shop')"><i class="bi bi-shop"></i> Découvrir la boutique</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <!-- Brand -->
+      <div class="col-lg-4 col-md-6">
+        <div class="d-flex align-items-center gap-10 mb-3" style="gap:10px">
+          <div class="brand-logo-circle">A</div>
+          <div class="footer-brand-name">AfriDrinks</div>
+        </div>
+        <p class="footer-desc">Votre boutique spécialisée en boissons africaines authentiques. Bières, vins, jus naturels et spiritueux directement importés du continent africain.</p>
+    
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/janvier_1_0?igsh=MnloMnJmcG9sYWxl" target="_blank" class="social-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://wa.me/qr/JA3NQJLU4OVTI1" target="_blank" class="social-btn" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="mt-4">
+          <div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:6px">PAIEMENT SÉCURISÉ</div>
+          <div class="payment-icons">
+            <div class="pay-icon">AIRTEL</div>
+            <div class="pay-icon">MOOV MONEY</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-3 col-6">
+        <div class="footer-heading">Catégories</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="filterCat('biere');showSection('shop')">🍺 Bières africaines</a></li>
+          <li><a href="#" onclick="filterCat('vin');showSection('shop')">🍷 Vins & Palmiers</a></li>
+          <li><a href="#" onclick="filterCat('jus');showSection('shop')">🥭 Jus naturels</a></li>
+          <li><a href="#" onclick="filterCat('spirit');showSection('shop')">🥃 Spiritueux</a></li>
+          <li><a href="#" onclick="filterCat('soft');showSection('shop')">🧃 Boissons douces</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-3 col-6">
+        <div class="footer-heading">Informations</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showSection('about')">À propos de nous</a></li>
+          <li><a href="#" onclick="showSection('blog')">Blog</a></li>
+          <li><a href="#">Livraison & retours</a></li>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">CGV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-3 col-6">
+        <div class="footer-heading">Mon Compte</div>
+        <ul class="footer-links">
+          <li><a href="#">Connexion</a></li>
+          <li><a href="#">Créer un compte</a></li>
+          <li><a href="#" onclick="showSection('wishlist')">Mes favoris</a></li>
+          <li><a href="#">Mes commandes</a></li>
+          <li><a href="#">Suivi de commande</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-3 col-6">
+        <div class="footer-heading">Contact</div>
+        <div class="footer-contact-item"><i class="bi bi-geo-alt-fill"></i><span>Okala, Libreville</span></div>
+        <div class="footer-contact-item"><i class="bi bi-telephone-fill"></i><span>06 48 95 70</span></div>
+        <div class="footer-contact-item"><i class="bi bi-envelope-fill"></i><span>natsustella5@gmail.com</span></div>
+        <div class="footer-contact-item"><i class="bi bi-instagram"></i><a href="https://www.instagram.com/janvier_1_0?igsh=MnloMnJmcG9sYWxl" target="_blank" style="margin-left:5px">@janvier_1_0</a></div>
+        <div class="footer-contact-item"><i class="bi bi-clock-fill"></i><span>Lun – Sam : 8h – 20h</span></div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 AfriDrinks · Tous droits réservés</div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="#">CGV</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Cookies</a>
+        <a href="#">Plan du site</a>
+      </div>
+      <div style="color:rgba(255,255,255,.4);font-size:.75rem">Made with ❤️ for Africa 🌍</div>
+    </div>
+  </div>
+</footer>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
+
+<div id="toast-container"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+const PRODUCTS = [
+
+{ id:1, name:'Regab Original', brand:'SOGABRA Gabon', cat:'biere', price:2500, oldPrice:3000, img:'regab.png', emoji:'🍺', badge:'Best-seller', rating:4.8, reviews:124 },
+  { id:2, name:'Castel Beer 65cl', brand:'SOGABRA Cameroun', cat:'biere', price:4200, oldPrice:null, img:'castel.png', emoji:'🍺', badge:'new', rating:4.6, reviews:89 },
+  { id:3, name:'gazel', brand:'SOBOA Sénégal', cat:'biere', price:1500, oldPrice:2200, img:'bieregazel.png', emoji:'🍺', badge:'promo', rating:4.7, reviews:210 },
+  { id:4, name:'jus d ananas', brand:'Brasseries du Congo', cat:'jus naturel', price:4000, oldPrice:null, img:'ananas.png', emoji:'🍺', badge:null, rating:4.5, reviews:67 },
+  { id:5, name:'mix', brand:'Nigerian Breweries', cat:'jus naturel', price:1900, oldPrice:2400, img:'ananasgingembre.png', emoji:'🍺', badge:'black', rating:4.4, reviews:55 },
+  { id:6, name:'guinnes', brand:'SABC Cameroun', cat:'biere', price:3800, oldPrice:null, img:'guinnes.png', emoji:'🍺', badge:'new', rating:4.9, reviews:38 },
+  { id:7, name:'Vin de Palme Artisanal', brand:'Producteurs locaux', cat:'vin', price:6500, oldPrice:7000, img:'vins_de_palme.png', emoji:'🍷', badge:'black', rating:4.7, reviews:92 },
+  { id:8, name:'Vin Rouge Sud', brand:'Vins d\'Afrique', cat:'vin', price:15000, oldPrice:null, img:'rouge.png', emoji:'🍷', badge:'new', rating:4.8, reviews:45 },
+  { id:9, name:'Vin Rosé Maghreb', brand:'Tunisie Selection', cat:'vin', price:9500, oldPrice:11000, img:'rose.png', emoji:'🍷', badge:null, rating:4.5, reviews:30 },
+  { id:10, name:'Jus de Bissap 1L', brand:'AfriJus', cat:'jus', price:3500, oldPrice:4000, img:'bissap.png', emoji:'🌺', badge:'Best-seller', rating:4.9, reviews:320 },
+  { id:11, name:'Jus de Baobab 75cl', brand:'Baobab Direct', cat:'jus', price:5200, oldPrice:null, img:'baobab.png', emoji:'🌳', badge:'new', rating:4.8, reviews:88 },
+  { id:12, name:'Jus de Gingembre 1L', brand:'Racines Africaines', cat:'jus', price:3000, oldPrice:3500, img:'gingembre.png', emoji:'🫚', badge:'black', rating:4.7, reviews:145 },
+  { id:13, name:'Jus pomme 1L', brand:'TropiAfrique', cat:'jus', price:5200, oldPrice:null, img:'pomme.png', emoji:'🥭', badge:null, rating:4.6, reviews:76 },
+
+  { id:14, name:'tamarin 70cl', brand:'Distillerie du Bénin', cat:'spirit', price:15000, oldPrice:18000, img:'tamarin.png', emoji:'🥃', badge:'black', rating:4.6, reviews:55 },
+  { id:15, name:'mix 70cl', brand:'Distillery Local', cat:'spirit', price:28000, oldPrice:null, img:'mentheraise.png', emoji:'🥃', badge:'new', rating:4.9, reviews:22 },
+  { id:16, name:'corossol 70cl', brand:'Kenya Spirit', cat:'spirit', price:35000, oldPrice:40000, img:'corossol.png', emoji:'🥃', badge:'promo', rating:4.7, reviews:18 },
+{ id:17, name:'Cocktail Tropical 33cl', brand:'AfriDrinks Original', cat:'soft', price:1500, oldPrice:null, img:'tropical.png', emoji:'🧃', badge:'new', rating:4.5, reviews:110 },
+  { id:18, name:'Eau de Coco 33cl', brand:'CocoPure', cat:'soft', price:1800, oldPrice:2000, img:'coco.png', emoji:'🥥', badge:null, rating:4.8, reviews:203 },
+  { id:19, name:'Ginger Beer 33cl', brand:'Spice of Africa', cat:'soft', price:2200, oldPrice:null, img:'gingerbeer.png', emoji:'🫚', badge:'Best-seller', rating:4.7, reviews:95 },
+  { id:20, name:'Limonade Hibiscus', brand:'Hibis', cat:'soft', price:1200, oldPrice:1500, img:'hibiscus.png', emoji:'🌺', badge:'black', rating:4.4, reviews:62 },
+  
+]
+let cart = JSON.parse(localStorage.getItem('afriCart') || '[]');
+let wishlist = JSON.parse(localStorage.getItem('afriWish') || '[]');
+let currentCat = 'all';
+let currentSort = 'default';
+let viewMode = 'grid';
+const DELIVERY_COST = 1500;
+const FREE_DELIVERY_THRESHOLD = 25000;
+
+// ===== FILTER BUTTONS STYLE =====
+function setActiveFilter(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.style.background = 'var(--surface)';
+    b.style.color = 'var(--text)';
+    b.style.border = '1px solid var(--border)';
+  });
+  btn.style.background = 'var(--primary)';
+  btn.style.color = '#fff';
+  btn.style.border = '1px solid var(--primary)';
+}
+
+function showSection(id) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  const map = { home:'Accueil', shop:'Boutique', blog:'Blog', about:'À Propos', contact:'Contact' };
+  document.querySelectorAll('.nav-link').forEach(l => { if (l.textContent.trim() === map[id]) l.classList.add('active'); });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'shop') renderShopProducts();
+  if (id === 'wishlist') renderWishlist();
+}
+
+function renderProductCard(p, small = false) {
+  const inWish = wishlist.includes(p.id);
+
+  const imgContent = p.img ? `<img src="${p.img}" alt="${p.name}" />` : `<span style="font-size:5rem;line-height:1">${p.emoji}</span>`;
+  
+  return `
+    <div class="col-6 ${small ? 'col-md-3' : 'col-md-4 col-lg-3'}">
+      <div class="product-card">
+        <div class="product-img-wrap">
+          ${imgContent}
+          ${p.badge ? `<span class="product-badge ${p.badge === 'new' ? 'new' : p.badge === 'promo' ? 'promo' : p.badge === 'black' ? 'black' : ''}">${p.badge === 'new' ? 'Nouveau' : p.badge === 'promo' ? 'Promo' : p.badge === 'black' ? 'Black Friday' : p.badge}</span>` : ''}
+          <div class="product-wish ${inWish ? 'active' : ''}" onclick="toggleWish(${p.id}, this)"><i class="bi bi-heart${inWish ? '-fill' : ''}"></i></div>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">${p.brand}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-rating">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))} <span>(${p.reviews})</span></div>
+          <div class="product-price-row">
+            <div>
+              ${p.oldPrice ? `<div class="price-old">${p.oldPrice.toLocaleString()} XAF</div>` : ''}
+              <div class="price-new">${p.price.toLocaleString()} XAF</div>
+            </div>
+            <button class="add-cart-btn" onclick="addToCart(${p.id})"><i class="bi bi-bag-plus"></i> Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderFeatured() {
+  const featured = PRODUCTS; 
+  document.getElementById('featuredProducts').innerHTML = featured.map(p => renderProductCard(p)).join('');
+}
+
+function renderShopProducts() {
+  let list = currentCat === 'all' ? [...PRODUCTS] : PRODUCTS.filter(p => p.cat === currentCat);
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q));
+  if (currentSort === 'price-asc') list.sort((a,b) => a.price - b.price);
+  if (currentSort === 'price-desc') list.sort((a,b) => b.price - a.price);
+  if (currentSort === 'name') list.sort((a,b) => a.name.localeCompare(b.name));
+  const el = document.getElementById('shopProducts');
+  const none = document.getElementById('noResults');
+  if (!list.length) { el.innerHTML = ''; none.style.display = 'block'; return; }
+  none.style.display = 'none';
+  el.innerHTML = list.map(p => renderProductCard(p)).join('');
+}
+
+function filterCat(cat) { currentCat = cat; if(document.getElementById('shop').classList.contains('active')) renderShopProducts(); }
+function sortProducts(val) { currentSort = val; renderShopProducts(); }
+function setView(v) {
+  viewMode = v;
+  document.getElementById('gridBtn').style.background = v === 'grid' ? 'var(--primary)' : 'var(--surface)';
+  document.getElementById('listBtn').style.background = v === 'list' ? 'var(--primary)' : 'var(--surface)';
+  renderShopProducts();
+}
+
+function liveSearch(val) { if(document.getElementById('shop').classList.contains('active')) renderShopProducts(); }
+
+function addToCart(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  const ex = cart.find(x => x.id === id);
+  if (ex) ex.qty++;
+  else cart.push({ ...p, qty: 1 });
+  saveCart(); renderCart();
+  showToast(`${p.emoji} ${p.name} ajouté au panier`, 'success');
+}
+
+function saveCart() {
+  localStorage.setItem('afriCart', JSON.stringify(cart));
+  document.getElementById('cartBadge').textContent = cart.reduce((s,i) => s + i.qty, 0);
+}
+
+function renderCart() {
+  const el = document.getElementById('cartItems');
+  const empty = document.getElementById('cartEmpty');
+  const footer = document.getElementById('cartFooter');
+  if (!cart.length) { el.innerHTML = ''; empty.style.display = 'block'; footer.style.display = 'none'; return; }
+  empty.style.display = 'none'; footer.style.display = 'block';
+  
+  el.innerHTML = cart.map(item => {
+    const imgContent = item.img ? `<img src="${item.img}" style="width:100%;height:100%;object-fit:contain" />` : `<span style="font-size:1.6rem">${item.emoji}</span>`;
+    return `
+    <div class="cart-item">
+      <div class="cart-item-img">${imgContent}</div>
+      <div style="flex:1">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">${item.price.toLocaleString()} XAF</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span>${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+      </div>
+      <button style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1.1rem" onclick="removeCart(${item.id})"><i class="bi bi-trash"></i></button>
+    </div>`;
+  }).join('');
+  
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  let delivery = DELIVERY_COST;
+  let deliveryText = `${DELIVERY_COST} XAF`;
+  
+  if (subtotal >= FREE_DELIVERY_THRESHOLD) {
+    delivery = 0;
+    deliveryText = "Gratuit";
+  }
+  
+  const total = subtotal + delivery;
+  
+  document.getElementById('cartSubtotal').textContent = subtotal.toLocaleString() + ' XAF';
+  document.getElementById('cartDelivery').textContent = deliveryText;
+  document.getElementById('cartTotal').textContent = total.toLocaleString() + ' XAF';
+  
+  const msgEl = document.getElementById('deliveryMsg');
+  if (delivery === 0) {
+    msgEl.innerHTML = '<i class="bi bi-check-circle" style="color:var(--accent2)"></i> Livraison offerte atteinte !';
+    msgEl.style.color = 'var(--accent2)';
+  } else {
+    msgEl.innerHTML = `<i class="bi bi-truck"></i> Livraison standard (${DELIVERY_COST} XAF). <br>Offerte à partir de ${FREE_DELIVERY_THRESHOLD.toLocaleString()} XAF`;
+    msgEl.style.color = 'var(--text-muted)';
+  }
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(x => x.id !== id);
+  saveCart(); renderCart();
+}
+function removeCart(id) { cart = cart.filter(x => x.id !== id); saveCart(); renderCart(); }
+function clearCart() { cart = []; saveCart(); renderCart(); showToast('Panier vide'); }
+function checkout() { showToast('Redirection vers le paiement sécurisé...', 'success'); setTimeout(()=>showSection('contact'), 1500); }
+
+function toggleWish(id, el) {
+  if (wishlist.includes(id)) {
+    wishlist = wishlist.filter(x => x !== id);
+    el.classList.remove('active');
+    el.innerHTML = '<i class="bi bi-heart"></i>';
+    showToast('Retiré des favoris');
+  } else {
+    wishlist.push(id);
+    el.classList.add('active');
+    el.innerHTML = '<i class="bi bi-heart-fill"></i>';
+    showToast('Ajouté aux favoris ❤️', 'success');
+  }
+  localStorage.setItem('afriWish', JSON.stringify(wishlist));
+  document.getElementById('wishBadge').textContent = wishlist.length;
+}
+
+function renderWishlist() {
+  const el = document.getElementById('wishlistProducts');
+  const empty = document.getElementById('wishlistEmpty');
+  const list = PRODUCTS.filter(p => wishlist.includes(p.id));
+  if (!list.length) { el.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  el.innerHTML = list.map(p => renderProductCard(p)).join('');
+}
+
+function submitContact(e) {
+  e.preventDefault();
+  let valid = true;
+  const fields = [
+    { id: 'fPrenom', err: 'errPrenom', validate: v => v.trim().length > 1 },
+    { id: 'fNom', err: 'errNom', validate: v => v.trim().length > 1 },
+    { id: 'fEmail', err: 'errEmail', validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id: 'fMessage', err: 'errMessage', validate: v => v.trim().length > 10 },
+  ];
+  fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    const err = document.getElementById(f.err);
+    if (!f.validate(el.value)) { err.style.display = 'block'; el.style.borderColor = '#e53'; valid = false; }
+    else { err.style.display = 'none'; el.style.borderColor = 'var(--border)'; }
+  });
+  if (valid) {
+    showToast('Message envoyé avec succès ! Nous vous répondrons à natsustella5@gmail.com', 'success');
+    document.getElementById('contactForm').reset();
+  }
+}
+
+function subscribeNewsletter() {
+  const email = document.getElementById('newsletterEmail').value;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Veuillez entrer un email valide', 'error'); return; }
+  const subs = JSON.parse(localStorage.getItem('afriSubs') || '[]');
+  if (subs.includes(email)) { showToast('Vous êtes déjà inscrit !'); return; }
+  subs.push(email);
+  localStorage.setItem('afriSubs', JSON.stringify(subs));
+  document.getElementById('newsletterEmail').value = '';
+  showToast('🎉 Inscription réussie ! Votre code AFRI10 (-10%) vous attend.', 'success');
+}
+
+function copyCode() {
+  navigator.clipboard.writeText('AFRI10').then(() => showToast('Code AFRI10 copié !', 'success'));
+}
+
+function toggleDark() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('darkIcon').className = isDark ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
+  localStorage.setItem('afriTheme', isDark ? 'light' : 'dark');
+}
+
+function showToast(msg, type = '') {
+  const container = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast-msg' + (type ? ' ' + type : '');
+  t.textContent = msg;
+  container.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTop');
+  btn.classList.toggle('show', window.scrollY > 400);
+});
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+function observeFade() { document.querySelectorAll('.fade-up').forEach(el => obs.observe(el)); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Theme
+  const theme = localStorage.getItem('afriTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('darkIcon').className = theme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+  renderFeatured();
+  saveCart();
+  document.getElementById('wishBadge').textContent = wishlist.length;
+
+  setTimeout(() => { document.getElementById('loader').classList.add('hide'); }, 1400);
+
+  setTimeout(observeFade, 100);
+
+  document.querySelectorAll('.filter-btn').forEach((b, i) => {
+    if (i === 0) {
+      b.style.background = 'var(--primary)';
+      b.style.color = '#fff';
+      b.style.border = '1px solid var(--primary)';
+    } else {
+      b.style.background = 'var(--surface)';
+      b.style.color = 'var(--text)';
+      b.style.border = '1px solid var(--border)';
+    }
+  });
+});
+</script>
+</body>
+</html>
